@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Zior • Zamansız ve Sürdürülebilir Giyim</title>
+  <meta name="description" content="Zior: Zamansız tasarım, sürdürülebilir üretim ve yüksek kalite. Yeni sezon koleksiyonunu keşfet, güvenle alışveriş yap." />
+  <link rel="canonical" href="https://www.zior.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Zior • Zamansız ve Sürdürülebilir Giyim" />
+  <meta property="og:description" content="Yeni sezon koleksiyonunu keşfet. Ücretsiz kargo ve kolay iade." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.zior.com/" />
+  <meta property="og:image" content="https://www.zior.com/assets/og-image.jpg" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <!-- Icons (opsiyonel favicon) -->
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+
+  <link rel="preload" href="/js/products.js" as="script" />
+  <link rel="preload" href="/assets/hero-placeholder.jpg" as="image" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script>
+    // Renk modu tercihine saygı
+    (function () {
+      const saved = localStorage.getItem("zior-theme");
+      if (saved) document.documentElement.dataset.theme = saved;
+    })();
+  </script>
+
+  <!-- JSON-LD: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Zior",
+    "url":"https://www.zior.com/",
+    "logo":"https://www.zior.com/assets/logo.svg",
+    "sameAs":[
+      "https://instagram.com/zior",
+      "https://www.facebook.com/zior",
+      "https://www.tiktok.com/@zior"
+    ],
+    "brand":{"@type":"Brand","name":"Zior"}
+  }
+  </script>
+</head>
+<body>
+  <!-- Skip link -->
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#hero" aria-label="Zior Ana Sayfa">
+        <img src="/assets/logo.svg" alt="Zior logosu" width="120" height="28" />
+      </a>
+
+      <nav class="nav" aria-label="Ana menü">
+        <button id="menuToggle" class="hamburger" aria-expanded="false" aria-controls="primaryMenu">
+          <span class="sr-only">Menüyü aç/kapat</span>
+          ☰
+        </button>
+        <ul id="primaryMenu" class="menu">
+          <li><a href="#koleksiyon">Koleksiyon</a></li>
+          <li><a href="#hakkimizda">Hakkımızda</a></li>
+          <li><a href="#magazalar">Mağazalar</a></li>
+          <li><a href="#iletisim">İletişim</a></li>
+        </ul>
+      </nav>
+
+      <div class="actions">
+        <button id="themeToggle" class="btn-icon" aria-label="Tema değiştir">🌓</button>
+        <button id="cartBtn" class="btn-icon" aria-label="Sepet" data-count="0">🛍️</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section id="hero" class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1>Zamansız Tasarım, Sürdürülebilir Üretim</h1>
+          <p>Her gün giyilebilir, uzun ömürlü parçalar. Yeni sezon <strong>Zior</strong> koleksiyonunu keşfet.</p>
+          <div class="hero-cta">
+            <a href="#koleksiyon" class="btn btn-primary">Yeni Koleksiyon</a>
+            <a href="#hakkimizda" class="btn btn-outline">Felsefemiz</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="/assets/hero-placeholder.jpg" alt="Zior yeni sezon kampanya görseli" loading="eager" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Filtre + Arama -->
+    <section class="filters container" aria-label="Ürün filtreleri">
+      <div class="filter-row">
+        <input id="searchInput" type="search" placeholder="Ürün ara (ör. oversize tişört)" aria-label="Ürün ara" />
+        <select id="categorySelect" aria-label="Kategori seç">
+          <option value="">Tüm Kategoriler</option>
+          <option value="Tişört">Tişört</option>
+          <option value="Gömlek">Gömlek</option>
+          <option value="Elbise">Elbise</option>
+          <option value="Pantolon">Pantolon</option>
+          <option value="Ceket">Ceket</option>
+          <option value="Aksesuar">Aksesuar</option>
+        </select>
+        <select id="sortSelect" aria-label="Sırala">
+          <option value="featured">Öne çıkan</option>
+          <option value="price-asc">Fiyat (Artan)</option>
+          <option value="price-desc">Fiyat (Azalan)</option>
+          <option value="newest">En yeni</option>
+        </select>
+      </div>
+      <div class="chips" role="list" aria-label="Hızlı etiketler">
+        <button class="chip" data-chip="sürdürülebilir">Sürdürülebilir</button>
+        <button class="chip" data-chip="organik">Organik Pamuk</button>
+        <button class="chip" data-chip="indirim">İndirimdekiler</button>
+        <button class="chip" data-chip="yeni">Yeni Sezon</button>
+      </div>
+    </section>
+
+    <!-- Ürünler -->
+    <section id="koleksiyon" class="collection container" aria-live="polite">
+      <h2>Yeni Koleksiyon</h2>
+      <div id="productGrid" class="grid"></div>
+      <div id="emptyState" class="empty" hidden>Aramanızla eşleşen ürün bulunamadı.</div>
+    </section>
+
+    <!-- Hakkımızda -->
+    <section id="hakkimizda" class="about container">
+      <h2>Hakkımızda</h2>
+      <p>
+        Zior, yerel üreticilerle çalışan, etik ve şeffaf bir moda markasıdır. Koleksiyonlarımızda
+        <strong>organik pamuk</strong>, <strong>Tencel™</strong> ve <strong>geri dönüştürülmüş polyester</strong> gibi
+        malzemeler kullanıyoruz. Hedefimiz, gardırobunuza uzun süre eşlik edecek kalıcı parçalar sunmak.
+      </p>
+      <ul class="values">
+        <li>✔️ Sürdürülebilir tedarik</li>
+        <li>✔️ Zamansız tasarım</li>
+        <li>✔️ Adil üretim</li>
+        <li>✔️ Karbon-nötr kargo (seçili bölgeler)</li>
+      </ul>
+      <p>
+        Daha fazla bilgi için <a href="https://www.fashionrevolution.org" target="_blank" rel="noopener">Fashion Revolution</a> hareketini inceleyebilirsiniz.
+      </p>
+    </section>
+
+    <!-- Mağazalar -->
+    <section id="magazalar" class="stores container">
+      <h2>Mağazalar</h2>
+      <p>İstanbul, Ankara ve İzmir’de seçili mağazalarımızda bizi deneyimleyin.</p>
+      <div class="store-grid">
+        <article class="store-card">
+          <h3>İstanbul - Nişantaşı</h3>
+          <p>Teşvikiye Mah., Şakayık Sk. No:10</p>
+          <p>Hafta içi 10:00–20:00, Cts-Paz 11:00–20:00</p>
+        </article>
+        <article class="store-card">
+          <h3>Ankara - Çankaya</h3>
+          <p>Tunali Hilmi Cd. No:55</p>
+          <p>Hafta içi 10:00–20:00, Cts-Paz 11:00–19:00</p>
+        </article>
+        <article class="store-card">
+          <h3>İzmir - Alsancak</h3>
+          <p>Kıbrıs Şehitleri Cd. No:22</p>
+          <p>Her gün 10:00–20:00</p>
+        </article>
+      </div>
+      <!-- İsteğe bağlı harita yerleştirme -->
+      <div class="map-embed" aria-hidden="true">
+        <!-- Kendi Google Maps iframe'inizi ekleyebilirsiniz -->
+      </div>
+    </section>
+
+    <!-- Bülten -->
+    <section class="newsletter">
+      <div class="container newsletter-inner">
+        <h2>İlk siparişine %10 indirim</h2>
+        <p>Bültene katıl, yeni koleksiyon ve kampanyaları kaçırma.</p>
+        <form id="newsletterForm" class="nl-form" novalidate>
+          <label class="sr-only" for="nlEmail">E-posta</label>
+          <input id="nlEmail" type="email" placeholder="E-posta adresiniz" required />
+          <button type="submit" class="btn btn-primary">Katıl</button>
+          <span id="nlMsg" role="status" aria-live="polite"></span>
+        </form>
+      </div>
+    </section>
+
+    <!-- İletişim -->
+    <section id="iletisim" class="contact container">
+      <h2>İletişim</h2>
+      <form id="contactForm" class="contact-form" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="name">Ad Soyad</label>
+            <input id="name" name="name" required />
+          </div>
+          <div class="field">
+            <label for="email">E-posta</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">Mesajınız</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Gönder</button>
+        <span id="contactMsg" role="status" aria-live="polite"></span>
+      </form>
+      <p class="contact-meta">Müşteri hizmetleri: <a href="mailto:destek@zior.com">destek@zior.com</a> • +90 850 000 00 00</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="/assets/logo.svg" alt="Zior" width="120" height="28" />
+        <p>© <span id="year"></span> Zior Tekstil A.Ş. Tüm hakları saklıdır.</p>
+      </div>
+      <nav aria-label="Alt menü">
+        <ul class="footer-links">
+          <li><a href="#">KVKK</a></li>
+          <li><a href="#">İade & Değişim</a></li>
+          <li><a href="#">Kargo & Teslimat</a></li>
+          <li><a href="#">SSS</a></li>
+        </ul>
+      </nav>
+      <div class="socials" aria-label="Sosyal medya">
+        <a href="#" aria-label="Instagram">📷</a>
+        <a href="#" aria-label="TikTok">🎵</a>
+        <a href="#" aria-label="Facebook">📘</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Ürün Hızlı Görünüm Modal -->
+  <dialog id="productModal" class="modal">
+    <button class="modal-close" aria-label="Kapat">×</button>
+    <div class="modal-body" id="modalBody" role="document"></div>
+  </dialog>
+
+  <script src="/js/products.js" defer></script>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
+
+:root {
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --primary: #111827;
+  --accent: #0ea5e9;
+  --surface: #f1f5f9;
+  --ring: rgba(14,165,233,.35);
+  --radius: 12px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1020;
+  --text: #e5e7eb;
+  --muted: #9aa3b2;
+  --primary: #e5e7eb;
+  --accent: #38bdf8;
+  --surface: #111827;
+  --ring: rgba(56,189,248,.35);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+
+img { max-width: 100%; display: block; border-radius: var(--radius); }
+a { color: inherit; text-decoration: none; }
+a:focus { outline: 2px solid var(--ring); outline-offset: 2px; }
+button, input, select, textarea { font: inherit; }
+
+.container { width: min(1120px, 92%); margin-inline: auto; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: auto;
+}
+.skip-link:focus { left: 16px; top: 16px; background: var(--surface); padding: 8px 12px; border-radius: 8px; }
+
+.site-header {
+  position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px);
+  background: color-mix(in oklab, var(--bg) 75%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--muted) 25%, transparent);
+}
+.header-inner { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 12px 0; }
+.brand img { display: block; }
+
+.nav .menu { display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; }
+.nav a { padding: 8px 10px; border-radius: 8px; }
+.nav a:hover { background: var(--surface); }
+
+.hamburger { display: none; background: transparent; border: 0; font-size: 22px; }
+
+.actions { display: flex; gap: 8px; align-items: center; }
+.btn-icon { border: 1px solid color-mix(in oklab, var(--muted) 30%, transparent); background: var(--surface); border-radius: 10px; padding: 8px 10px; cursor: pointer; }
+.btn-icon[data-count]:after {
+  content: attr(data-count); font-size: 11px; background: var(--accent); color: #fff; border-radius: 999px; padding: 2px 6px; margin-left: 6px;
+}
+
+.hero { padding: 36px 0 18px; }
+.hero-inner { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 28px; }
+.hero-copy h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 8px; }
+.hero-copy p { color: var(--muted); margin: 0 0 18px; }
+.hero-cta { display: flex; gap: 12px; }
+.btn { display: inline-block; padding: 12px 16px; border-radius: 12px; border: 1px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--text); color: var(--bg); }
+.btn-primary:hover { opacity: .9; }
+.btn-outline { border-color: color-mix(in oklab, var(--muted) 35%, transparent); background: transparent; }
+.btn-outline:hover { background: var(--surface); }
+
+.filters { padding: 12px 0 0; }
+.filter-row { display: grid; grid-template-columns: 1fr 180px 180px; gap: 12px; }
+input[type="search"], select, input[type="email"], input[type="text"], textarea {
+  width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid color-mix(in oklab, var(--muted) 35%, transparent); background: var(--bg); color: var(--text);
+}
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.chip { padding: 8px 12px; border-radius: 999px; background: var(--surface); border: 1px solid color-mix(in oklab, var(--muted) 25%, transparent); cursor: pointer; }
+.chip.active { outline: 2px solid var(--ring); }
+
+.collection { padding: 22px 0 36px; }
+.collection h2 { margin-bottom: 12px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.card {
+  background: var(--surface); border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+}
+.card-body { padding: 12px; display: grid; gap: 6px; }
+.card h3 { font-size: 16px; margin: 0; }
+.price { display: flex; gap: 8px; align-items: baseline; }
+.price .old { color: var(--muted); text-decoration: line-through; font-size: 14px; }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge { font-size: 11px; padding: 4px 8px; border: 1px solid color-mix(in oklab, var(--muted) 30%, transparent); border-radius: 999px; }
+.card .actions { margin-top: 6px; display: flex; gap: 8px; }
+.card .btn { width: 100%; }
+
+.empty { text-align: center; color: var(--muted); padding: 16px; border: 1px dashed color-mix(in oklab, var(--muted) 35%, transparent); border-radius: 12px; }
+
+.about, .stores, .contact { padding: 32px 0; }
+.values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding-left: 18px; }
+.store-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.store-card { background: var(--surface); border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent); padding: 12px; border-radius: 12px; }
+
+.newsletter { background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 70%, transparent), transparent); padding: 28px 0; }
+.newsletter-inner { display: grid; gap: 8px; }
+.nl-form { display: flex; gap: 8px; flex-wrap: wrap; }
+#nlMsg, #contactMsg { margin-left: 8px; color: var(--muted); }
+
+.contact-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field { display: grid; gap: 6px; }
+
+.site-footer { border-top: 1px solid color-mix(in oklab, var(--muted) 20%, transparent); padding: 24px 0; margin-top: 24px; }
+.footer-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: start; }
+.footer-links { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.socials a { font-size: 20px; margin-right: 8px; }
+
+.modal { border: 0; border-radius: 16px; padding: 0; width: min(960px, 92%); }
+.modal::backdrop { background: rgba(0,0,0,.5); }
+.modal-body { padding: 12px; }
+.modal-close { position: absolute; right: 12px; top: 6px; border: 0; background: transparent; font-size: 28px; cursor: pointer; }
+
+@media (max-width: 980px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .store-grid { grid-template-columns: 1fr; }
+  .values { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .nav .menu { display: none; position: absolute; right: 0; top: 60px; background: var(--bg); padding: 12px; border-radius: 12px; border: 1px solid color-mix(in oklab, var(--muted) 25%, transparent); }
+  .hamburger { display: inline-block; }
+  .filter-row { grid-template-columns: 1fr; }
+  .contact-form .row { grid-template-columns: 1fr; }
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+// Basit ürün verileri (gerçek görsellerinizle değiştirin)
+window.ZIOR_PRODUCTS = [
+  {
+    id: "t001",
+    title: "Organik Oversize Tişört",
+    category: "Tişört",
+    price: 599,
+    oldPrice: 699,
+    badges: ["sürdürülebilir", "indirim", "yeni"],
+    colors: ["Siyah", "Beyaz", "Gri"],
+    sizes: ["XS","S","M","L","XL"],
+    rating: 4.7,
+    createdAt: "2025-08-01",
+    images: ["/assets/hero-placeholder.jpg"]
+  },
+  {
+    id: "p101",
+    title: "Relaxed Fit Denim Pantolon",
+    category: "Pantolon",
+    price: 1299,
+    badges: ["yeni"],
+    colors: ["Açık Mavi","Koyu Mavi"],
+    sizes: ["28","30","32","34","36"],
+    rating: 4.5,
+    createdAt: "2025-07-20",
+    images: ["/assets/hero-placeholder.jpg"]
+  },
+  {
+    id: "d301",
+    title: "Tencel™ Midi Elbise",
+    category: "Elbise",
+    price: 1499,
+    badges: ["sürdürülebilir"],
+    colors: ["Zeytin","Siyah"],
+    sizes: ["S","M","L"],
+    rating: 4.8,
+    createdAt: "2025-06-28",
+    images: ["/assets/hero-placeholder.jpg"]
+  },
+  {
+    id: "s201",
+    title: "Keten Karışımlı Gömlek",
+    category: "Gömlek",
+    price: 999,
+    badges: ["organik"],
+    colors: ["Bej","Beyaz"],
+    sizes: ["S","M","L","XL"],
+    rating: 4.4,
+    createdAt: "2025-05-15",
+    images: ["/assets/hero-placeholder.jpg"]
+  },
+  {
+    id: "j401",
+    title: "Minimal Bomber Ceket",
+    category: "Ceket",
+    price: 1799,
+    badges: [],
+    colors: ["Siyah","Lacivert"],
+    sizes: ["S","M","L","XL"],
+    rating: 4.6,
+    createdAt: "2025-08-15",
+    images: ["/assets/hero-placeholder.jpg"]
+  },
+  {
+    id: "a701",
+    title: "Geri Dönüştürülmüş Bez Çanta",
+    category: "Aksesuar",
+    price: 249,
+    badges: ["sürdürülebilir","indirim"],
+    oldPrice: 299,
+    colors: ["Doğal"],
+    sizes: ["Standart"],
+    rating: 4.9,
+    createdAt: "2025-04-10",
+    images: ["/assets/hero-placeholder.jpg"]
+  }
+];
+
+(function () {
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+
+  const productGrid = $("#productGrid");
+  const emptyState = $("#emptyState");
+  const searchInput = $("#searchInput");
+  const categorySelect = $("#categorySelect");
+  const sortSelect = $("#sortSelect");
+  const cartBtn = $("#cartBtn");
+  const themeToggle = $("#themeToggle");
+  const chips = $$(".chip");
+
+  const menuToggle = $("#menuToggle");
+  const primaryMenu = $("#primaryMenu");
+
+  const productModal = $("#productModal");
+  const modalClose = productModal?.querySelector(".modal-close");
+  const modalBody = $("#modalBody");
+  const newsletterForm = $("#newsletterForm");
+  const nlEmail = $("#nlEmail");
+  const nlMsg = $("#nlMsg");
+  const contactForm = $("#contactForm");
+  const contactMsg = $("#contactMsg");
+
+  const state = {
+    query: "",
+    category: "",
+    chip: "",
+    sort: "featured",
+    cartCount: Number(localStorage.getItem("zior-cart-count") || 0),
+    products: window.ZIOR_PRODUCTS || []
+  };
+
+  // Yıl
+  const yearEl = $("#year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // Tema
+  themeToggle?.addEventListener("click", () => {
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem("zior-theme", next);
+  });
+
+  // Menü
+  menuToggle?.addEventListener("click", () => {
+    const open = primaryMenu.style.display === "block";
+    primaryMenu.style.display = open ? "none" : "block";
+    menuToggle.setAttribute("aria-expanded", String(!open));
+  });
+
+  // Sepet sayacı
+  const updateCart = (delta = 0) => {
+    state.cartCount = Math.max(0, state.cartCount + delta);
+    localStorage.setItem("zior-cart-count", String(state.cartCount));
+    cartBtn?.setAttribute("data-count", String(state.cartCount));
+  };
+  updateCart(0);
+
+  // Filtreler
+  searchInput?.addEventListener("input", e => {
+    state.query = e.target.value.toLowerCase().trim();
+    render();
+  });
+
+  categorySelect?.addEventListener("change", e => {
+    state.category = e.target.value;
+    render();
+  });
+
+  sortSelect?.addEventListener("change", e => {
+    state.sort = e.target.value;
+    render();
+  });
+
+  chips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      chips.forEach(c => c.classList.remove("active"));
+      if (state.chip === chip.dataset.chip) {
+        state.chip = "";
+      } else {
+        state.chip = chip.dataset.chip;
+        chip.classList.add("active");
+      }
+      render();
+    });
+  });
+
+  // Ürün kartı oluşturma
+  function productCard(p) {
+    const price = p.oldPrice
+      ? `<div class="price"><strong>${formatTRY(p.price)}</strong><span class="old">${formatTRY(p.oldPrice)}</span></div>`
+      : `<div class="price"><strong>${formatTRY(p.price)}</strong></div>`;
+
+    const badges = (p.badges || [])
+      .map(b => `<span class="badge">${capitalize(b)}</span>`).join("");
+
+    return `
+      <article class="card" tabindex="0" aria-labelledby="title-${p.id}">
+        <img src="${p.images?.[0] || '/assets/hero-placeholder.jpg'}" alt="${p.title}" loading="lazy" />
+        <div class="card-body">
+          <h3 id="title-${p.id}">${p.title}</h3>
+          <div class="badges">${badges}</div>
+          ${price}
+          <div class="actions">
+            <button class="btn btn-outline" data-quick="${p.id}">Hızlı Gör</button>
+            <button class="btn btn-primary" data-add="${p.id}">Sepete Ekle</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  // Sıralama
+  function sortProducts(list) {
+    if (state.sort === "price-asc") return list.sort((a,b)=>a.price-b.price);
+    if (state.sort === "price-desc") return list.sort((a,b)=>b.price-a.price);
+    if (state.sort === "newest") return list.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    return list; // featured
+  }
+
+  // Filtreleme
+  function filterProducts() {
+    let list = [...state.products];
+    if (state.query) {
+      list = list.filter(p =>
+        p.title.toLowerCase().includes(state.query) ||
+        p.category.toLowerCase().includes(state.query)
+      );
+    }
+    if (state.category) list = list.filter(p => p.category === state.category);
+    if (state.chip) list = list.filter(p => (p.badges || []).includes(state.chip));
+    return sortProducts(list);
+  }
+
+  // Render
+  function render() {
+    const list = filterProducts();
+    productGrid.innerHTML = list.map(productCard).join("");
+    emptyState.hidden = list.length > 0;
+
+    // Buton bağla
+    $$("#productGrid [data-add]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.add;
+        const product = state.products.find(p=>p.id===id);
+        if (product) {
+          updateCart(1);
+          btn.textContent = "Eklendi ✓";
+          setTimeout(()=>btn.textContent="Sepete Ekle", 1500);
+        }
+      });
+    });
+
+    $$("#productGrid [data-quick]").forEach(btn => {
+      btn.addEventListener("click", () => openModal(btn.dataset.quick));
+    });
+  }
+
+  // Modal
+  function openModal(id) {
+    const p = state.products.find(x=>x.id===id);
+    if (!p) return;
+    modalBody.innerHTML = `
+      <div class="product-detail">
+        <div class="pd-media">
+          ${(p.images||[]).map(src=>`<img src="${src}" alt="${p.title}" />`).join("")}
+        </div>
+        <div class="pd-info">
+          <h3>${p.title}</h3>
+          <p>Kategori: ${p.category} • ⭐ ${p.rating || "5.0"}</p>
+          <div class="price">${p.oldPrice?`<span class="old">${formatTRY(p.oldPrice)}</span>`:""} <strong>${formatTRY(p.price)}</strong></div>
+          <div class="pd-opts">
+            <label>Renk:
+              <select>${(p.colors||[]).map(c=>`<option>${c}</option>`).join("")}</select>
+            </label>
+            <label>Beden:
+              <select>${(p.sizes||[]).map(s=>`<option>${s}</option>`).join("")}</select>
+            </label>
+          </div>
+          <button class="btn btn-primary" id="modalAdd">Sepete Ekle</button>
+        </div>
+      </div>
+      <style>
+        .product-detail { display:grid; grid-template-columns: 1.1fr .9fr; gap:16px; }
+        .pd-media { display:grid; gap:8px; }
+        .pd-opts { display:grid; gap:8px; margin:8px 0; }
+        @media (max-width: 860px){ .product-detail { grid-template-columns: 1fr; } }
+      </style>
+    `;
+    $("#modalAdd", modalBody)?.addEventListener("click", () => updateCart(1));
+    productModal.showModal();
+  }
+  modalClose?.addEventListener("click", ()=> productModal.close());
+  productModal?.addEventListener("click", e => {
+    const rect = productModal.getBoundingClientRect();
+    if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+      productModal.close();
+    }
+  });
+
+  // Bülten (sahte doğrulama)
+  newsletterForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!nlEmail.value || !/.+@.+\..+/.test(nlEmail.value)) {
+      nlMsg.textContent = "Lütfen geçerli bir e-posta girin.";
+      return;
+    }
+    nlMsg.textContent = "Teşekkürler! E-postanı kontrol et.";
+    newsletterForm.reset();
+  });
+
+  // İletişim (sahte)
+  contactForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    contactMsg.textContent = "Mesajınız alındı. 24 saat içinde dönüş yapacağız.";
+    contactForm.reset();
+  });
+
+  // Yardımcılar
+  function formatTRY(n) {
+    try { return new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY'}).format(n); }
+    catch { return n + " TL"; }
+  }
+  function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+  // Başlat
+  render();
+
+  // Service Worker kaydı
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js").catch(()=>{});
+  }
+})();
+
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="36" viewBox="0 0 180 36" aria-label="Zior Logo">
+  <text x="0" y="26" font-family="Verdana, Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#0f172a">Zior</text>
+</svg>
+
+{
+  "name": "Zior",
+  "short_name": "Zior",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "/assets/logo.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
+
+const CACHE = "zior-v1";
+const ASSETS = [
+  "/", "/index.html",
+  "/css/styles.css",
+  "/js/app.js", "/js/products.js",
+  "/assets/logo.svg", "/assets/hero-placeholder.jpg",
+  "/manifest.webmanifest"
+];
+
+self.addEventListener("install", e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+});
+
+self.addEventListener("activate", e => {
+  e.waitUntil(caches.keys().then(keys =>
+    Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))
+  ));
+});
+
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    caches.match(e.request).then(r => r || fetch(e.request))
+  );
+});
